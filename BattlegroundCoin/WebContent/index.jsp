@@ -56,7 +56,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
   <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
     <h1 class="w3-jumbo"><span class="w3-hide-small">I'm</span> John Doe.</h1>
     <form action="crawlingservlet"  name="resWrite" method="post" enctype="multipart/form-data">
-    		<input type="submit" value="text"/>
+    		<input type="submit" value="test"/>
     </form>
     <p>Photographer and Web Designer.</p>
     <img src="/w3images/man_smoke.jpg" alt="boy" class="w3-image" width="992" height="1108">
