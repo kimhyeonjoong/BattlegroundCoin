@@ -1,6 +1,7 @@
 package gmail.hotjoong.servlet;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,6 +15,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import gmail.hotjoong.model.DAO;
+
+
 @WebServlet("/crawlingservlet")
 public class crawlingservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -21,10 +25,25 @@ public class crawlingservlet extends HttpServlet {
     
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			String userIp = request.getParameter("userIp");
+			String userNickname = request.getParameter("userNickname");
 			
-		crawiling("fpsapi");
-		doGet(request, response);
-		
+			int a = (int)(crawiling(userNickname));
+			
+			//사용자 IP address
+			InetAddress local = InetAddress.getLocalHost();
+			String ip = local.getHostAddress();
+			
+			if(userIp.equals(ip)) {
+				DAO dao = new DAO();
+				response.sendRedirect(dao.update_wellet("fpsapi", a));
+			}else {
+				response.sendRedirect("index.html");
+			}
+			
+			
+			
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -37,6 +56,7 @@ public class crawlingservlet extends HttpServlet {
 	//21시간 차이가 납니다!
 	//21+24=45시간 45시간이상이 현재와 차이 나면 하루전 게임!
 
+	//단위(분)으로 출력.
 	public double crawiling(String NickName) throws Exception{
 		String opggURL = "https://pubg.op.gg/user/"+ NickName +"?server=kakao";
 		Document doc = null;
@@ -63,7 +83,7 @@ public class crawlingservlet extends HttpServlet {
 		}
 		
 		
-		return timeValue;
+		return timeValue/60;
 	}
 
 	//게임시간인지 현재시간에서 24시간 이내인지 확인함
