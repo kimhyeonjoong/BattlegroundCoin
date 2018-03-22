@@ -65,7 +65,7 @@ public class DAO {
 		
 		if(cnt>0) {
 			System.out.println("성공");
-			moveURL = "index.html";
+			moveURL = "mywallet.jsp";
 		}else {
 			System.out.println("실패");
 			moveURL = "index.html";
